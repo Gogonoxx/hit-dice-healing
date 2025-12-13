@@ -1,0 +1,20 @@
+{
+  "HIT_DICE_HEALING": {
+    "Title": "Hit Dice Healing",
+    "HitDice": "Hit Dice",
+    "Available": "Available",
+    "Roll": "Roll",
+    "NoDiceAvailable": "No Hit Dice available!",
+    "NoDiceHint": "Hit Dice regenerate on a Long Rest.",
+    "HealingRange": "HP",
+    "Remaining": "remaining",
+    "Regenerated": "Hit Dice regenerated!",
+    "SpentDice": "spends",
+    "HitDie": "Hit Die",
+    "HitDicePlural": "Hit Dice",
+    "MaxHPReached": "(max HP reached)",
+    "SelectCharacter": "Please select a player character.",
+    "NotEnoughDice": "Not enough Hit Dice!",
+    "MinimumOneDie": "At least 1 Hit Die required!"
+  }
+}

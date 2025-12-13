@@ -1,0 +1,42 @@
+<div class="hit-dice-modal-content">
+  {{#if hasNoDice}}
+  <div class="no-dice-warning">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span>Keine Hit Dice verfügbar!</span>
+    <p class="hint">Hit Dice regenerieren bei einer Long Rest.</p>
+  </div>
+  {{else}}
+
+  <div class="dice-status">
+    <span class="label">Verfügbar:</span>
+    <span class="value">{{current}} / {{max}}</span>
+  </div>
+
+  <div class="dice-selector">
+    <button type="button" class="btn-adjust" data-action="decrement" {{#unless canDecrement}}disabled{{/unless}}>
+      <i class="fas fa-minus"></i>
+    </button>
+    <div class="dice-display">
+      <span class="dice-count">{{diceToRoll}}</span>
+      <span class="dice-type">d{{dieType}}</span>
+    </div>
+    <button type="button" class="btn-adjust" data-action="increment" {{#unless canIncrement}}disabled{{/unless}}>
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+
+  <div class="healing-preview">
+    <div class="formula">{{formula}}</div>
+    <div class="range">
+      <i class="fas fa-heart"></i>
+      <span>{{rangeMin}} - {{rangeMax}} HP</span>
+    </div>
+  </div>
+
+  <button type="button" class="roll-btn" data-action="roll" {{#unless canRoll}}disabled{{/unless}}>
+    <i class="fas fa-dice-d20"></i>
+    <span>Würfeln</span>
+  </button>
+
+  {{/if}}
+</div>

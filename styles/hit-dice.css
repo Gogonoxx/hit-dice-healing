@@ -1,0 +1,392 @@
+/**
+ * PF2E Hit Dice Healing - Styles
+ * Matches the PF2E system theme
+ */
+
+/* ============================================================================
+   CSS Variables (PF2E Theme)
+   ============================================================================ */
+
+:root {
+  --hd-red: #5c0000;
+  --hd-red-light: #7a1a1a;
+  --hd-brown-dark: #3a2318;
+  --hd-brown-medium: #5e3929;
+  --hd-tan: #c9b18a;
+  --hd-tan-light: #e8dcc4;
+  --hd-text: #1c1612;
+  --hd-text-light: #4a3c32;
+  --hd-gold: #c4a747;
+  --hd-heart: #c41e3a;
+}
+
+/* ============================================================================
+   Character Sheet Injection
+   ============================================================================ */
+
+.hit-dice-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.5rem;
+  margin: 0.25rem 0;
+  background: linear-gradient(135deg, var(--hd-tan-light) 0%, var(--hd-tan) 100%);
+  border: 1px solid var(--hd-brown-medium);
+  border-radius: 4px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.hit-dice-display .hit-dice-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hit-dice-display .hit-dice-label {
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: var(--hd-brown-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hit-dice-display .hit-dice-value {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--hd-red);
+}
+
+.hit-dice-display .hit-dice-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: var(--hd-red);
+  color: white;
+  border: 2px solid var(--hd-red-light);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.hit-dice-display .hit-dice-btn:hover {
+  background: var(--hd-red-light);
+  transform: scale(1.05);
+}
+
+.hit-dice-display .hit-dice-btn:active {
+  transform: scale(0.95);
+}
+
+.hit-dice-display .hit-dice-btn i {
+  font-size: 14px;
+}
+
+/* ============================================================================
+   Modal Window
+   ============================================================================ */
+
+.hit-dice-modal.application {
+  background: linear-gradient(135deg, var(--hd-brown-dark) 0%, var(--hd-brown-medium) 100%);
+  border: 3px solid var(--hd-red);
+  border-radius: 8px;
+}
+
+.hit-dice-modal .window-header {
+  background: var(--hd-red);
+  border-bottom: 2px solid var(--hd-gold);
+}
+
+.hit-dice-modal .window-title {
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.hit-dice-modal .window-content {
+  background: linear-gradient(180deg, var(--hd-tan-light) 0%, var(--hd-tan) 100%);
+  padding: 1rem;
+}
+
+/* Modal Content */
+.hit-dice-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* No Dice Warning */
+.hit-dice-modal-content .no-dice-warning {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: var(--hd-red);
+}
+
+.hit-dice-modal-content .no-dice-warning i {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.hit-dice-modal-content .no-dice-warning span {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.hit-dice-modal-content .no-dice-warning .hint {
+  font-size: 0.85rem;
+  color: var(--hd-text-light);
+  margin-top: 0.5rem;
+}
+
+/* Dice Status */
+.hit-dice-modal-content .dice-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: white;
+  border: 1px solid var(--hd-brown-medium);
+  border-radius: 4px;
+}
+
+.hit-dice-modal-content .dice-status .label {
+  color: var(--hd-text-light);
+}
+
+.hit-dice-modal-content .dice-status .value {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--hd-red);
+}
+
+/* Dice Selector */
+.hit-dice-modal-content .dice-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.hit-dice-modal-content .btn-adjust {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--hd-brown-medium);
+  color: white;
+  border: 2px solid var(--hd-brown-dark);
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hit-dice-modal-content .btn-adjust:hover:not(:disabled) {
+  background: var(--hd-brown-dark);
+  transform: scale(1.1);
+}
+
+.hit-dice-modal-content .btn-adjust:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.hit-dice-modal-content .dice-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+}
+
+.hit-dice-modal-content .dice-count {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--hd-red);
+  line-height: 1;
+}
+
+.hit-dice-modal-content .dice-type {
+  font-size: 1rem;
+  color: var(--hd-text-light);
+  font-weight: bold;
+}
+
+/* Healing Preview */
+.hit-dice-modal-content .healing-preview {
+  text-align: center;
+  padding: 0.75rem;
+  background: white;
+  border: 1px solid var(--hd-brown-medium);
+  border-radius: 4px;
+}
+
+.hit-dice-modal-content .healing-preview .formula {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--hd-text);
+  font-family: monospace;
+}
+
+.hit-dice-modal-content .healing-preview .range {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  color: var(--hd-heart);
+  font-weight: bold;
+}
+
+.hit-dice-modal-content .healing-preview .range i {
+  color: var(--hd-heart);
+}
+
+/* Roll Button */
+.hit-dice-modal-content .roll-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(180deg, var(--hd-red-light) 0%, var(--hd-red) 100%);
+  color: white;
+  border: 2px solid var(--hd-gold);
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.hit-dice-modal-content .roll-btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, var(--hd-red) 0%, var(--hd-red-light) 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.hit-dice-modal-content .roll-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.hit-dice-modal-content .roll-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================================================
+   Chat Message
+   ============================================================================ */
+
+.hit-dice-chat-card {
+  background: linear-gradient(180deg, var(--hd-tan-light) 0%, var(--hd-tan) 100%);
+  border: 2px solid var(--hd-red);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.hit-dice-chat-card .card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--hd-red);
+  color: white;
+}
+
+.hit-dice-chat-card .actor-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  border: 2px solid var(--hd-gold);
+}
+
+.hit-dice-chat-card .card-title {
+  margin: 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hit-dice-chat-card .card-content {
+  padding: 0.75rem;
+}
+
+.hit-dice-chat-card .roll-description {
+  margin: 0 0 0.5rem 0;
+  color: var(--hd-text);
+}
+
+.hit-dice-chat-card .roll-result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.hit-dice-chat-card .roll-result .formula {
+  color: var(--hd-text-light);
+}
+
+.hit-dice-chat-card .roll-result .equals {
+  color: var(--hd-text-light);
+}
+
+.hit-dice-chat-card .roll-result .total {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--hd-text);
+}
+
+.hit-dice-chat-card .healing-result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(196, 30, 58, 0.1);
+  border-radius: 4px;
+}
+
+.hit-dice-chat-card .healing-result i {
+  color: var(--hd-heart);
+}
+
+.hit-dice-chat-card .healing-amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--hd-heart);
+}
+
+.hit-dice-chat-card .limited-hint {
+  font-size: 0.8rem;
+  color: var(--hd-text-light);
+  font-style: italic;
+}
+
+.hit-dice-chat-card .card-footer {
+  padding: 0.5rem;
+  background: var(--hd-brown-dark);
+  color: var(--hd-tan-light);
+  font-size: 0.85rem;
+}
+
+.hit-dice-chat-card .remaining {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

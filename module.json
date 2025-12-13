@@ -1,0 +1,43 @@
+{
+  "id": "hit-dice-healing",
+  "title": "PF2E Hit Dice Healing",
+  "description": "D&D-style Hit Dice healing system for Pathfinder 2E. Characters can spend Hit Dice during short rests to heal.",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Gogonoxx"
+    }
+  ],
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13.347",
+    "maximum": "13"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system",
+        "compatibility": {}
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "styles": [
+    "styles/hit-dice.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "lang/de.json"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+<div class="hit-dice-chat-card">
+  <header class="card-header">
+    <img src="{{actorImg}}" alt="{{actorName}}" class="actor-img" />
+    <h3 class="card-title">
+      <i class="fas fa-heart"></i>
+      Hit Dice Healing
+    </h3>
+  </header>
+
+  <div class="card-content">
+    <p class="roll-description">
+      <strong>{{actorName}}</strong> gibt
+      <strong>{{diceSpent}}</strong> Hit {{#if (eq diceSpent 1)}}Die{{else}}Dice{{/if}} aus.
+    </p>
+
+    <div class="roll-result">
+      <span class="formula">{{formula}}</span>
+      <span class="equals">=</span>
+      <span class="total">{{rollTotal}}</span>
+    </div>
+
+    <div class="healing-result">
+      <i class="fas fa-heart"></i>
+      <span class="healing-amount">+{{healing}} HP</span>
+      {{#if wasLimited}}
+      <span class="limited-hint">(max HP erreicht)</span>
+      {{/if}}
+    </div>
+  </div>
+
+  <footer class="card-footer">
+    <span class="remaining">
+      <i class="fas fa-dice-d6"></i>
+      {{remaining}} / {{maxDice}} Hit Dice übrig
+    </span>
+  </footer>
+</div>
