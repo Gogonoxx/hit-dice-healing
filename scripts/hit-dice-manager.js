@@ -248,4 +248,131 @@ export class HitDiceManager {
 
     return { replenished: 0, total: max };
   }
+
+  // ============================================================================
+  // SPELLSLOT RECOVERY METHODS
+  // ============================================================================
+
+  /**
+   * Check if an actor is a spellcaster (has spellcasting features)
+   * @param {Actor} actor - The PF2E actor
+   * @returns {boolean} True if actor has spellcasting
+   */
+  static isSpellcaster(actor) {
+    // spellcastingFeatures returns only prepared/spontaneous entries (not focus/innate)
+    return actor.spellcasting?.spellcastingFeatures?.length > 0;
+  }
+
+  /**
+   * Get all depleted spellslots (where value < max) for an actor
+   * @param {Actor} actor - The PF2E actor
+   * @returns {Array} Array of depleted slot objects
+   */
+  static getDepletedSpellslots(actor) {
+    const depletedSlots = [];
+
+    if (!actor.spellcasting) return depletedSlots;
+
+    // Only get "regular" spellcasting entries (prepared/spontaneous, not focus/innate)
+    const entries = actor.spellcasting.spellcastingFeatures;
+
+    for (const entry of entries) {
+      const entryName = entry.name;
+      const entryId = entry.id;
+      const slots = entry.system?.slots;
+
+      if (!slots) continue;
+
+      // Check each slot level (slot1 through slot10)
+      for (let level = 1; level <= 10; level++) {
+        const slotKey = `slot${level}`;
+        const slotData = slots[slotKey];
+
+        if (!slotData || slotData.max === 0) continue;
+
+        // Only add if depleted (value < max)
+        if (slotData.value < slotData.max) {
+          depletedSlots.push({
+            entryId,
+            entryName,
+            level,
+            current: slotData.value,
+            max: slotData.max
+          });
+        }
+      }
+    }
+
+    // Sort by level ascending
+    return depletedSlots.sort((a, b) => a.level - b.level);
+  }
+
+  /**
+   * Restore a single spellslot by spending Hit Dice
+   * Cost: Slot Level = Hit Dice required (e.g., Level 5 slot = 5 Hit Dice)
+   * @param {Actor} actor - The PF2E actor
+   * @param {string} entryId - The spellcasting entry ID
+   * @param {number} slotLevel - The slot level to restore (1-10)
+   * @returns {Promise<boolean>} Success status
+   */
+  static async restoreSpellslot(actor, entryId, slotLevel) {
+    const hitDiceCost = slotLevel; // Cost equals slot level
+    const current = this.getCurrentHitDice(actor);
+
+    // Validate Hit Dice
+    if (hitDiceCost > current) {
+      ui.notifications.warn(game.i18n.format('HIT_DICE_HEALING.NotEnoughDiceForSlot', {
+        cost: hitDiceCost,
+        current: current
+      }));
+      return false;
+    }
+
+    // Find the spellcasting entry
+    const entry = actor.items.get(entryId);
+    if (!entry) {
+      ui.notifications.error('Spellcasting entry not found!');
+      return false;
+    }
+
+    const slotKey = `slot${slotLevel}`;
+    const slotData = entry.system.slots[slotKey];
+
+    if (!slotData || slotData.value >= slotData.max) {
+      ui.notifications.warn(game.i18n.localize('HIT_DICE_HEALING.SlotAlreadyFull'));
+      return false;
+    }
+
+    // Restore one slot
+    const newValue = slotData.value + 1;
+    await entry.update({
+      [`system.slots.${slotKey}.value`]: newValue
+    });
+
+    // Deduct Hit Dice
+    await this.setCurrentHitDice(actor, current - hitDiceCost);
+
+    // Send chat message
+    await this.sendSpellslotChatMessage(actor, entry.name, slotLevel, hitDiceCost, current - hitDiceCost);
+
+    return true;
+  }
+
+  /**
+   * Send a chat message for spellslot restoration
+   * @param {Actor} actor - The actor
+   * @param {string} entryName - Name of the spellcasting entry
+   * @param {number} slotLevel - The restored slot level
+   * @param {number} hitDiceSpent - Hit Dice spent
+   * @param {number} remaining - Remaining Hit Dice
+   */
+  static async sendSpellslotChatMessage(actor, entryName, slotLevel, hitDiceSpent, remaining) {
+    const content = `<strong>${actor.name}</strong> restored a Level ${slotLevel} spellslot (${entryName}) for ${hitDiceSpent} Hit Dice.`;
+
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor }),
+      content,
+      type: CONST.CHAT_MESSAGE_TYPES.OTHER
+    });
+  }
 }

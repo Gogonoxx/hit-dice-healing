@@ -390,3 +390,194 @@
   align-items: center;
   gap: 0.5rem;
 }
+
+/* ============================================================================
+   Tab Bar (Spellcaster Modal)
+   ============================================================================ */
+
+.hit-dice-modal-content .tab-bar {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem;
+  background: var(--hd-brown-dark);
+  border-radius: 6px;
+}
+
+.hit-dice-modal-content .tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  color: var(--hd-tan-light);
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.hit-dice-modal-content .tab:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.hit-dice-modal-content .tab.active {
+  background: var(--hd-red);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.hit-dice-modal-content .tab i {
+  font-size: 0.9rem;
+}
+
+/* Tab Content */
+.hit-dice-modal-content .tab-content {
+  display: none;
+}
+
+.hit-dice-modal-content .tab-content.active {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ============================================================================
+   Spellslot Tab Content
+   ============================================================================ */
+
+.hit-dice-modal-content .spellslot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.hit-dice-modal-content .spellslot-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: white;
+  border: 1px solid var(--hd-brown-medium);
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.hit-dice-modal-content .spellslot-row:hover {
+  border-color: var(--hd-red);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.hit-dice-modal-content .slot-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.hit-dice-modal-content .slot-entry {
+  font-size: 0.75rem;
+  color: var(--hd-text-light);
+}
+
+.hit-dice-modal-content .slot-level {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: var(--hd-text);
+}
+
+.hit-dice-modal-content .slot-count {
+  font-size: 0.8rem;
+  color: var(--hd-text-light);
+}
+
+.hit-dice-modal-content .slot-action {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hit-dice-modal-content .slot-cost {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--hd-red);
+  padding: 0.2rem 0.4rem;
+  background: rgba(92, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.hit-dice-modal-content .restore-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #4a9c4a 0%, #357735 100%);
+  color: white;
+  border: 2px solid #2d6b2d;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.hit-dice-modal-content .restore-btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, #357735 0%, #4a9c4a 100%);
+  transform: scale(1.05);
+}
+
+.hit-dice-modal-content .restore-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.hit-dice-modal-content .restore-btn:disabled {
+  background: #999;
+  border-color: #777;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hit-dice-modal-content .restore-btn i {
+  font-size: 0.9rem;
+}
+
+/* All Slots Full Message */
+.hit-dice-modal-content .all-slots-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  color: #357735;
+  text-align: center;
+}
+
+.hit-dice-modal-content .all-slots-full i {
+  font-size: 2rem;
+}
+
+.hit-dice-modal-content .all-slots-full span {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* Compact Chat Message */
+.hit-dice-compact {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0;
+}
+
+.hit-dice-compact i {
+  color: var(--hd-red);
+}
+
+.hit-dice-compact .hit-dice-cost {
+  color: var(--hd-text-light);
+  font-size: 0.85rem;
+}
