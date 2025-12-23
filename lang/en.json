@@ -5,9 +5,10 @@
     "Available": "Available",
     "Roll": "Roll",
     "NoDiceAvailable": "No Hit Dice available!",
-    "NoDiceHint": "Hit Dice regenerate on a Long Rest.",
+    "DiceRegenHint": "Hit Dice regenerate on a Long Rest.",
     "HealingRange": "HP",
     "Remaining": "remaining",
+    "DiceRemaining": "Hit Dice remaining",
     "Regenerated": "Hit Dice regenerated!",
     "SpentDice": "spends",
     "HitDie": "Hit Die",
@@ -15,6 +16,15 @@
     "MaxHPReached": "(max HP reached)",
     "SelectCharacter": "Please select a player character.",
     "NotEnoughDice": "Not enough Hit Dice!",
-    "MinimumOneDie": "At least 1 Hit Die required!"
+    "MinimumOneDie": "At least 1 Hit Die required!",
+
+    "TabHealing": "Healing",
+    "TabSpells": "Spellslots",
+    "AllSlotsFull": "All spellslots are full!",
+    "RestoreSlot": "Restore spellslot",
+    "NotEnoughDiceForSlot": "Not enough Hit Dice! Required: {cost}, Available: {current}",
+    "SlotAlreadyFull": "This spellslot is already full!",
+    "SpellslotRestored": "Spellslot Restored",
+    "SpellslotRestoredDesc": "restored a Level {level} spellslot ({entry}) for {cost} Hit Dice."
   }
 }

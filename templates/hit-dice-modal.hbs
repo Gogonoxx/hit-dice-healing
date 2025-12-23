@@ -1,42 +1,103 @@
 <div class="hit-dice-modal-content">
-  {{#if hasNoDice}}
-  <div class="no-dice-warning">
-    <i class="fas fa-exclamation-triangle"></i>
-    <span>Keine Hit Dice verfügbar!</span>
-    <p class="hint">Hit Dice regenerieren bei einer Long Rest.</p>
-  </div>
-  {{else}}
-
-  <div class="dice-status">
-    <span class="label">Verfügbar:</span>
-    <span class="value">{{current}} / {{max}}</span>
-  </div>
-
-  <div class="dice-selector">
-    <button type="button" class="btn-adjust" data-action="decrement" {{#unless canDecrement}}disabled{{/unless}}>
-      <i class="fas fa-minus"></i>
-    </button>
-    <div class="dice-display">
-      <span class="dice-count">{{diceToRoll}}</span>
-      <span class="dice-type">d{{dieType}}</span>
-    </div>
-    <button type="button" class="btn-adjust" data-action="increment" {{#unless canIncrement}}disabled{{/unless}}>
-      <i class="fas fa-plus"></i>
-    </button>
-  </div>
-
-  <div class="healing-preview">
-    <div class="formula">{{formula}}</div>
-    <div class="range">
+  {{!-- Tab Bar (nur für Spellcaster) --}}
+  {{#if isSpellcaster}}
+  <div class="tab-bar">
+    <button type="button" class="tab {{#if healingTabActive}}active{{/if}}" data-action="switchTab" data-tab="healing">
       <i class="fas fa-heart"></i>
-      <span>{{rangeMin}} - {{rangeMax}} HP</span>
+      <span>{{localize "HIT_DICE_HEALING.TabHealing"}}</span>
+    </button>
+    <button type="button" class="tab {{#if spellsTabActive}}active{{/if}}" data-action="switchTab" data-tab="spells">
+      <i class="fas fa-magic"></i>
+      <span>{{localize "HIT_DICE_HEALING.TabSpells"}}</span>
+    </button>
+  </div>
+  {{/if}}
+
+  {{!-- ============================================ --}}
+  {{!-- HEALING TAB (bestehender Content) --}}
+  {{!-- ============================================ --}}
+  <div class="tab-content {{#if healingTabActive}}active{{/if}}" data-tab="healing">
+    {{#if hasNoDice}}
+    <div class="no-dice-warning">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>{{localize "HIT_DICE_HEALING.NoDiceAvailable"}}</span>
+      <p class="hint">{{localize "HIT_DICE_HEALING.DiceRegenHint"}}</p>
     </div>
+    {{else}}
+
+    <div class="dice-status">
+      <span class="label">{{localize "HIT_DICE_HEALING.Available"}}:</span>
+      <span class="value">{{current}} / {{max}}</span>
+    </div>
+
+    <div class="dice-selector">
+      <button type="button" class="btn-adjust" data-action="decrement" {{#unless canDecrement}}disabled{{/unless}}>
+        <i class="fas fa-minus"></i>
+      </button>
+      <div class="dice-display">
+        <span class="dice-count">{{diceToRoll}}</span>
+        <span class="dice-type">d{{dieType}}</span>
+      </div>
+      <button type="button" class="btn-adjust" data-action="increment" {{#unless canIncrement}}disabled{{/unless}}>
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+
+    <div class="healing-preview">
+      <div class="formula">{{formula}}</div>
+      <div class="range">
+        <i class="fas fa-heart"></i>
+        <span>{{rangeMin}} - {{rangeMax}} HP</span>
+      </div>
+    </div>
+
+    <button type="button" class="roll-btn" data-action="roll" {{#unless canRoll}}disabled{{/unless}}>
+      <i class="fas fa-dice-d20"></i>
+      <span>{{localize "HIT_DICE_HEALING.Roll"}}</span>
+    </button>
+
+    {{/if}}
   </div>
 
-  <button type="button" class="roll-btn" data-action="roll" {{#unless canRoll}}disabled{{/unless}}>
-    <i class="fas fa-dice-d20"></i>
-    <span>Würfeln</span>
-  </button>
+  {{!-- ============================================ --}}
+  {{!-- SPELLSLOTS TAB (nur für Spellcaster) --}}
+  {{!-- ============================================ --}}
+  {{#if isSpellcaster}}
+  <div class="tab-content {{#if spellsTabActive}}active{{/if}}" data-tab="spells">
+    <div class="dice-status">
+      <span class="label">{{localize "HIT_DICE_HEALING.Available"}}:</span>
+      <span class="value">{{current}} / {{max}}</span>
+    </div>
 
+    {{#if depletedSlots.length}}
+    <div class="spellslot-list">
+      {{#each depletedSlots}}
+      <div class="spellslot-row">
+        <div class="slot-info">
+          <span class="slot-entry">{{this.entryName}}</span>
+          <span class="slot-level">Level {{this.level}}</span>
+          <span class="slot-count">({{this.current}}/{{this.max}})</span>
+        </div>
+        <div class="slot-action">
+          <span class="slot-cost">{{this.level}} HD</span>
+          <button type="button" class="restore-btn"
+                  data-action="restoreSlot"
+                  data-entry="{{this.entryId}}"
+                  data-level="{{this.level}}"
+                  {{#unless this.canAfford}}disabled{{/unless}}
+                  title="{{#if this.canAfford}}{{localize 'HIT_DICE_HEALING.RestoreSlot'}}{{else}}{{localize 'HIT_DICE_HEALING.NotEnoughDice'}}{{/if}}">
+            <i class="fas fa-redo"></i>
+          </button>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <div class="all-slots-full">
+      <i class="fas fa-check-circle"></i>
+      <span>{{localize "HIT_DICE_HEALING.AllSlotsFull"}}</span>
+    </div>
+    {{/if}}
+  </div>
   {{/if}}
 </div>

@@ -5,9 +5,10 @@
     "Available": "Verfügbar",
     "Roll": "Würfeln",
     "NoDiceAvailable": "Keine Hit Dice verfügbar!",
-    "NoDiceHint": "Hit Dice regenerieren bei einer Long Rest.",
+    "DiceRegenHint": "Hit Dice regenerieren bei einer Long Rest.",
     "HealingRange": "HP",
     "Remaining": "übrig",
+    "DiceRemaining": "Hit Dice übrig",
     "Regenerated": "Hit Dice regeneriert!",
     "SpentDice": "gibt aus",
     "HitDie": "Hit Die",
@@ -15,6 +16,15 @@
     "MaxHPReached": "(max HP erreicht)",
     "SelectCharacter": "Bitte wähle einen Spielercharakter aus.",
     "NotEnoughDice": "Nicht genug Hit Dice!",
-    "MinimumOneDie": "Mindestens 1 Hit Die erforderlich!"
+    "MinimumOneDie": "Mindestens 1 Hit Die erforderlich!",
+
+    "TabHealing": "Heilung",
+    "TabSpells": "Spellslots",
+    "AllSlotsFull": "Alle Spellslots sind voll!",
+    "RestoreSlot": "Spellslot wiederherstellen",
+    "NotEnoughDiceForSlot": "Nicht genug Hit Dice! Benötigt: {cost}, Verfügbar: {current}",
+    "SlotAlreadyFull": "Dieser Spellslot ist bereits voll!",
+    "SpellslotRestored": "Spellslot wiederhergestellt",
+    "SpellslotRestoredDesc": "hat einen Level {level} Spellslot ({entry}) für {cost} Hit Dice wiederhergestellt."
   }
 }
