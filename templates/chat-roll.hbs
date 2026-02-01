@@ -3,14 +3,13 @@
     <img src="{{actorImg}}" alt="{{actorName}}" class="actor-img" />
     <h3 class="card-title">
       <i class="fas fa-heart"></i>
-      Hit Dice Healing
+      {{localize "HIT_DICE_HEALING.Title"}}
     </h3>
   </header>
 
   <div class="card-content">
     <p class="roll-description">
-      <strong>{{actorName}}</strong> gibt
-      <strong>{{diceSpent}}</strong> Hit {{#if (eq diceSpent 1)}}Die{{else}}Dice{{/if}} aus.
+      {{localize "HIT_DICE_HEALING.SpentDice" name=actorName count=diceSpent dieWord=dieWord}}
     </p>
 
     <div class="roll-result">
@@ -23,7 +22,7 @@
       <i class="fas fa-heart"></i>
       <span class="healing-amount">+{{healing}} HP</span>
       {{#if wasLimited}}
-      <span class="limited-hint">(max HP erreicht)</span>
+      <span class="limited-hint">{{localize "HIT_DICE_HEALING.MaxHPReached"}}</span>
       {{/if}}
     </div>
   </div>
@@ -31,7 +30,7 @@
   <footer class="card-footer">
     <span class="remaining">
       <i class="fas fa-dice-d6"></i>
-      {{remaining}} / {{maxDice}} Hit Dice übrig
+      {{remaining}} / {{maxDice}} {{localize "HIT_DICE_HEALING.DiceRemaining"}}
     </span>
   </footer>
 </div>

@@ -1,0 +1,20 @@
+<div class="hit-dice-chat-card">
+  <header class="card-header {{#if isLongRest}}long-rest{{/if}}{{#if isFullRest}}full-rest{{/if}}">
+    <img src="{{actorImg}}" alt="{{actorName}}" class="actor-img" />
+    <h3 class="card-title">
+      {{#if isLongRest}}<i class="fas fa-moon"></i>{{/if}}
+      {{#if isFullRest}}<i class="fas fa-house-chimney"></i>{{/if}}
+      {{title}}
+    </h3>
+  </header>
+
+  <div class="card-content">
+    <p class="rest-awakens">{{awakens}}</p>
+
+    <ul class="rest-messages">
+      {{#each messages}}
+      <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

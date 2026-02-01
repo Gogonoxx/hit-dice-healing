@@ -158,12 +158,12 @@ export class HitDiceManager {
 
     // Validate
     if (diceCount > current) {
-      ui.notifications.warn(`${actor.name} hat nicht genug Hit Dice!`);
+      ui.notifications.warn(game.i18n.format('HIT_DICE_HEALING.NotEnoughDiceNamed', { name: actor.name }));
       return null;
     }
 
     if (diceCount < 1) {
-      ui.notifications.warn('Mindestens 1 Hit Die erforderlich!');
+      ui.notifications.warn(game.i18n.localize('HIT_DICE_HEALING.MinimumOneDie'));
       return null;
     }
 
@@ -208,6 +208,10 @@ export class HitDiceManager {
     const max = this.getMaxHitDice(actor);
     const dieType = this.getDieType(actor);
 
+    const dieWord = diceSpent === 1
+      ? game.i18n.localize('HIT_DICE_HEALING.HitDie')
+      : game.i18n.localize('HIT_DICE_HEALING.HitDicePlural');
+
     const content = await renderTemplate(
       'modules/hit-dice-healing/templates/chat-roll.hbs',
       {
@@ -215,6 +219,7 @@ export class HitDiceManager {
         actorImg: actor.img,
         diceSpent,
         dieType,
+        dieWord,
         formula: roll.formula,
         rollTotal: roll.total,
         healing: actualHealing,
@@ -367,7 +372,12 @@ export class HitDiceManager {
    * @param {number} remaining - Remaining Hit Dice
    */
   static async sendSpellslotChatMessage(actor, entryName, slotLevel, hitDiceSpent, remaining) {
-    const content = `<strong>${actor.name}</strong> restored a Level ${slotLevel} spellslot (${entryName}) for ${hitDiceSpent} Hit Dice.`;
+    const content = game.i18n.format('HIT_DICE_HEALING.SpellslotRestoredDesc', {
+      name: `<strong>${actor.name}</strong>`,
+      level: slotLevel,
+      entry: entryName,
+      cost: hitDiceSpent
+    });
 
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor }),
