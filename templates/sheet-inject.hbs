@@ -1,7 +1,7 @@
 <div class="hit-dice-display" data-actor-id="{{actorId}}">
   <div class="hit-dice-info">
     <span class="hit-dice-label">{{localize "HIT_DICE_HEALING.HitDice"}}</span>
-    <span class="hit-dice-value">{{current}} / {{max}}</span>
+    <span class="hit-dice-value">{{current}} / {{effectiveMax}}{{#if hasBurnt}} <span style="color: #c05050; font-size: 0.85em;" title="{{burnt}} verbrannte Hit Dice — nur Full Rest stellt sie wieder her">(−{{burnt}})</span>{{/if}}</span>
   </div>
   <button type="button" class="hit-dice-btn" title="{{localize 'HIT_DICE_HEALING.RollHitDice'}}">
     <i class="fas fa-dice-d6"></i>

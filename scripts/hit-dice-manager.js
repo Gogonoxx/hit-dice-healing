@@ -238,20 +238,53 @@ export class HitDiceManager {
   }
 
   /**
-   * Replenish all Hit Dice (called on Long Rest)
+   * Get Hit Dice burnt by journey events (stored on the actor).
+   * Only a Full Rest (Safe Haven) restores these.
+   * @param {Actor} actor
+   * @returns {number}
+   */
+  static getBurntHitDice(actor) {
+    return actor.getFlag('one-ring-journey', 'burntHitDice') || 0;
+  }
+
+  /**
+   * Effective max Hit Dice after subtracting burnt ones.
+   * Long Rest can only replenish up to this value.
+   * @param {Actor} actor
+   * @returns {number}
+   */
+  static getEffectiveMaxHitDice(actor) {
+    return Math.max(0, this.getMaxHitDice(actor) - this.getBurntHitDice(actor));
+  }
+
+  /**
+   * Replenish Hit Dice up to the effective max (Long Rest).
+   * Burnt HD are NOT restored here — only a Full Rest does that.
    * @param {Actor} actor - The PF2E actor
    */
   static async replenishHitDice(actor) {
-    const max = this.getMaxHitDice(actor);
+    const effectiveMax = this.getEffectiveMaxHitDice(actor);
     const current = this.getCurrentHitDice(actor);
 
-    // Only notify if actually replenishing
-    if (current < max) {
-      await this.setCurrentHitDice(actor, max);
-      return { replenished: max - current, total: max };
+    if (current < effectiveMax) {
+      await this.setCurrentHitDice(actor, effectiveMax);
+      return { replenished: effectiveMax - current, total: effectiveMax };
     }
 
-    return { replenished: 0, total: max };
+    return { replenished: 0, total: effectiveMax };
+  }
+
+  /**
+   * Restore burnt Hit Dice (called on Full Rest / Safe Haven).
+   * Clears the burnt flag so effective max returns to true max.
+   * @param {Actor} actor
+   */
+  static async restoreBurntHitDice(actor) {
+    const burnt = this.getBurntHitDice(actor);
+    if (burnt > 0) {
+      await actor.unsetFlag('one-ring-journey', 'burntHitDice');
+    }
+    return { restored: burnt };
   }
 
   // ============================================================================

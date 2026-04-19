@@ -53,6 +53,8 @@ export class HitDiceModal extends HandlebarsApplicationMixin(ApplicationV2) {
   async _prepareContext() {
     const current = HitDiceManager.getCurrentHitDice(this.actor);
     const max = HitDiceManager.getMaxHitDice(this.actor);
+    const burnt = HitDiceManager.getBurntHitDice(this.actor);
+    const effectiveMax = HitDiceManager.getEffectiveMaxHitDice(this.actor);
     const dieType = HitDiceManager.getDieType(this.actor);
     const conMod = HitDiceManager.getConModifier(this.actor);
 
@@ -83,6 +85,9 @@ export class HitDiceModal extends HandlebarsApplicationMixin(ApplicationV2) {
       actorName: this.actor.name,
       current,
       max,
+      burnt,
+      effectiveMax,
+      hasBurnt: burnt > 0,
       dieType,
       conMod,
       diceToRoll: this.diceToRoll,

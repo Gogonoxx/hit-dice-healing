@@ -166,8 +166,8 @@ export class RestManager {
 
   /**
    * Perform a Full Rest.
-   * Calls PF2E's built-in rest (HP, spell slots, conditions, etc.)
-   * then also restores Hit Dice.
+   * Calls PF2E's built-in rest (HP, spell slots, conditions, etc.),
+   * clears any journey-burnt Hit Dice, then restores all Hit Dice to true max.
    * @param {Actor} actor - The PF2E character actor
    */
   static async performFullRest(actor) {
@@ -176,10 +176,16 @@ export class RestManager {
       await game.pf2e.actions.restForTheNight({ actors: actor, skipDialog: true });
     }
 
-    // Restore Hit Dice (not handled by PF2E's rest)
+    // Clear burnt Hit Dice flag so effective max returns to true max
+    const burntResult = await HitDiceManager.restoreBurntHitDice(actor);
+
+    // Now replenish up to true max (since burnt is now 0)
     const hdResult = await HitDiceManager.replenishHitDice(actor);
 
-    // Send additional notification about HD
+    // Notify player
+    if (burntResult.restored > 0) {
+      ui.notifications.info(`${actor.name}: ${burntResult.restored} verbrannte Hit Dice regeneriert.`);
+    }
     if (hdResult.replenished > 0) {
       const msg = game.i18n.format('HIT_DICE_HEALING.HitDiceRestored', { count: hdResult.replenished });
       ui.notifications.info(`${actor.name}: ${msg}`);

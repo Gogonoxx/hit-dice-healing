@@ -139,13 +139,18 @@ Hooks.on('renderCharacterSheetPF2e', async (sheet, html, data) => {
   // --- Hit Dice Display Injection ---
   const current = HitDiceManager.getCurrentHitDice(actor);
   const max = HitDiceManager.getMaxHitDice(actor);
+  const burnt = HitDiceManager.getBurntHitDice(actor);
+  const effectiveMax = HitDiceManager.getEffectiveMaxHitDice(actor);
 
   const hitDiceHtml = await renderTemplate(
     'modules/hit-dice-healing/templates/sheet-inject.hbs',
     {
       actorId: actor.id,
       current,
-      max
+      max,
+      burnt,
+      effectiveMax,
+      hasBurnt: burnt > 0
     }
   );
 
